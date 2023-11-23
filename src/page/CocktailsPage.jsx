@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function CocktailsPage (){
     
     const [cocktails, setCocktails] = useState(null);
@@ -13,20 +15,33 @@ function CocktailsPage (){
         //  dans l'attente de la variable pour réccupérer les informations du fichier json
     return cocktailsResponse.json();
         })
-        .then ((cocktailsInJs) => {
-            // dans l'attente de réccupérer le fichiers json pour le convertir
-            console.log(cocktails)
-            setCocktails(cocktails);
-            // on stock la variable cocktails
-        });
-        
+        .then((cocktailsInJs) => {
+            setCocktails(cocktailsInJs.drinks);
+          });
+      }
+    return (
+        <main>
+            {cocktails ? (
+                // // ici on utilise la fonction map pour récupérer le tableau cocktails et on affiche le nom des cocktails (ici avec cocktail.strDrink)
+            <>
+            {cocktails.map((cocktail) => {
+                return (
+                <article>
+                    <h2>{cocktail.strDrink}</h2>
+                </article>
+                );
+            })}
+            </>
+        ) : (
+            <p>Cocktails en cours de chargement</p>
+        )}
+        </main>
+    );
+    }
+   export default CocktailsPage ;
 
-        return <main>{cocktails ? <article>cocktails prêts</article> : <p>Cocktails en cours de chargement</p>}</main>;
-}
-export default CocktailsPage;
-
-/**
-*import { useState } from "react";
+   /**
+    * import { useState } from "react";
 
 function CocktailsPage() {
   const [cocktails, setCocktails] = useState(null);
@@ -37,12 +52,28 @@ function CocktailsPage() {
         return coktailsResponse.json();
       })
       .then((cocktailsInJs) => {
-        console.log(cocktailsInJs);
-        setCocktails(cocktailsInJs);
+        setCocktails(cocktailsInJs.drinks);
       });
   }
 
-  return <main>{cocktails ? <article>cocktails prêts</article> : <p>Cocktails en cours de chargement</p>}</main>;
+  return (
+    <main>
+      {cocktails ? (
+        <>
+          {cocktails.map((cocktail) => {
+            return (
+              <article>
+                <h2>{cocktail.strDrink}</h2>
+              </article>
+            );
+          })}
+        </>
+      ) : (
+        <p>Cocktails en cours de chargement</p>
+      )}
+    </main>
+  );
 }
 
-  export default CocktailsPage;
+export default CocktailsPage;
+    */
